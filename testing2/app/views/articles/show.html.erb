@@ -1,0 +1,35 @@
+<h1>Show Article</h1>
+<% flash[:error] %>
+<% if @article.errors.any? %>
+       <div class="error_message">
+       <ul>
+          <% for message in @article.errors.full_messages %>
+          <%= message %>
+          <% end %>
+       </ul>
+<% end %>
+<h2>Title</h2>
+<h3><%= @article.title %></h3>
+<h2>Body</h2>
+<h3><%= @article.body %></h3>
+<h4>rating <%= @article.rating %></h4>
+
+<h4> Comment </h4>
+
+<div id="comments">
+<%= render :partial => "comments", :locals => {:comments => @comments}  %>
+</div><br /><br />
+<div>
+
+<%= form_for @comment, :url => comments_path, :remote => true do |f| %>
+<%= f.text_area :content %>
+      <%= f.hidden_field :article_id, :value => @article.id %>
+      <br />
+      <%= submit_tag "comment" %>
+<% end %>
+
+</div>
+
+
+
+

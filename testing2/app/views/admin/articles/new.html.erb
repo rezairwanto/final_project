@@ -1,0 +1,19 @@
+<h1>New Article</h1>
+<%= form_for @article  do |f| %>
+<% if @article.errors.any? %>
+       <div class="error_message">
+       <ul>
+          <% for message in @article.errors.full_messages %>
+          <%= message %>
+          <% end %>
+       </ul>
+       </div>
+<% end %>
+ Title: <%= f.text_field :title %>
+<br/>
+ Body: <%= f.text_area :body%>
+<br/>
+ Rating: <%= f.text_field :rating%>
+<br/>
+  <%= f.submit "create" %>
+<% end %>
