@@ -1,6 +1,6 @@
 class Admin::CategoriesController < Admin::ApplicationController 
   before_filter :require_admin_login
-  before_filter :find_category, :only => [:edit, :update, :delete, :show] 
+  before_filter :find_category, :only => [:edit, :update, :destroy, :show] 
 
   def index
     @category = Category.all
@@ -12,24 +12,12 @@ class Admin::CategoriesController < Admin::ApplicationController
   end
 
   def edit 
-   
      @parent_category = Category.where(["parent_id IS NULL"]).map{|x| [x.name, x.id]}
   end
 
-  def delete
-     @category = Category.find_by_id(params[:id])
-    if @category.parent_id == nil
-      Category.find_by_id(params[:id]).destroy
-      if Category.find_by_parent_id(@category.id) == nil
-      redirect_to admin_categories_path, :notice => "category was deleted"
-      else
-      Category.find_by_parent_id(@category.id).destroy
-      redirect_to admin_categories_path, :notice => "category was deleted"
-      end
-    else
+  def destroy
     Category.find_by_id(params[:id]).destroy
     redirect_to admin_categories_path, :notice => "category was deleted"
-    end
   end
 
   def update
@@ -51,7 +39,7 @@ class Admin::CategoriesController < Admin::ApplicationController
   end
 
   def show
-   
+   @categoryy = Category.find_by_id(@category.parent_id)
   end
   
   private
@@ -60,8 +48,6 @@ class Admin::CategoriesController < Admin::ApplicationController
     if @category == nil
       flash[:error] = "the product not found"
       redirect_to admin_category_path 
-    else 
-      true
     end
   end
   

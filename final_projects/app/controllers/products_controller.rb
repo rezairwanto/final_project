@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_filter :require_login, :only => [:new, :create, :edit, :update, :delete]
-  before_filter :find_product, :only => [:edit, :update, :delete, :show]
+  before_filter :require_login, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :find_product, :only => [:edit, :update, :destroy, :show]
 
   def new
     @product = Product.new
@@ -15,8 +15,8 @@ class ProductsController < ApplicationController
     @parent_category = Category.where(["parent_id IS not NULL"]).map{|x| [x.name, x.id]}
   end
 
-  def delete
-    if @product.user_id == current_user.id
+  def destroy
+    if @product.user_id == current_user.id || current_user.is_admin?
     Product.find_by_id(params[:id]).destroy
     redirect_to :action => :index, :notice => "category was deleted"
     else
@@ -25,7 +25,7 @@ class ProductsController < ApplicationController
   end
 
   def update
-    if @product.user_id == current_user.id
+    if @product.user_id == current_user.id || current_user.is_admin?
       if @product.update_attributes(params[:product])
         redirect_to products_path, :notice =>"product was update"
       else
@@ -47,7 +47,8 @@ class ProductsController < ApplicationController
   end
 
   def show
-
+    @category_name = Category.find_by_id(@product.categories_id)
+    @user_name = User.find_by_id(@product.user_id)
   end
 
   private

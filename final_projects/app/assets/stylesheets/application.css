@@ -89,7 +89,8 @@ a:focus{
  float: left;
  list-style: none;
  display:block;
- padding: 10px 22px 20px 10px;
+ border-bottom: 1px dashed #C39C4E;
+ padding: 10px 50px 30px 2px;
  color: #ffffff;  
 }
 .vertmenu {
@@ -101,13 +102,13 @@ a:focus{
 
 .vertmenu h3 {
   display: block; 
-
+  background-color:#ffffff;
   font-size: 90%; 
   padding: 3px 0 5px 3px;
   border: 1px solid #000000;
   color: #333333;
   margin: 10px 10px 10px 10px;
-  width:159px;
+  width:150px;
   text-align: center;
   border-radius:30px;
   -moz-border-radius:30px;
@@ -131,21 +132,36 @@ a:focus{
 .vertmenu ul li a {
   font-size: 80%;
   display: block;
-  border-bottom: 1px dashed #C39C4E;
   padding: 5px 0 2px 4px;
   text-decoration: none;
   color: #ffffff;
   width:140px;
 }
+
+.vertmenu ul li ol a {
+  font-size: 80%;
+  display: block;
+  border-bottom: 1px dashed #C39C4E;
+  padding: 5px 0 2px 4px;
+  text-decoration: none;
+  color: #ffffff;
+  width:100px;
+}
+
+.vertmenu ul li a:hover, .vertmenu ul li a:focus{
+  color: #000000;
+  background-color: #eeeeee;
+}
+
 .content {
- width: 1000px;
-  margin-left: 180px;
+ width: 700px;
+  margin-left: 250px;
   height: auto;
   text-align: left;
 }
 .content h1 {
   width: 1000px;
-  margin-left: -200px;
+  margin-left: 0px;
   text-align: left;
 }
 

@@ -1,7 +1,7 @@
 class ArticlesController < ApplicationController
   
-  before_filter :require_login, :only => [:new, :create, :edit, :update, :delete]
-  before_filter :find_article, :only => [:edit, :update, :delete, :show]
+  before_filter :require_login, :only => [:new, :create, :edit, :update, :destroy]
+  before_filter :find_article, :only => [:edit, :update, :destroy, :show]
 
   def index
     @article = Article.all
@@ -12,7 +12,7 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(params[:article])
+    @article = Article.new(params[:article]) 
     @article.user_id = current_user.id
     if @article.save
       redirect_to :action => :index, :notice => "article was created"
@@ -42,9 +42,9 @@ class ArticlesController < ApplicationController
    @comment = Comment.new
   end
 
-  def delete
+  def destroy
 
-    if @article.user_id == current_user.id
+    if @article.user_id == current_user.id || current_user.is_admin?
     Article.find_by_id(params[:id]).destroy
     redirect_to :action => :index
     else

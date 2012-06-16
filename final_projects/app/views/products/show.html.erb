@@ -9,16 +9,28 @@
           <% end %>
        </ul>
 <% end %>
-<%= f.label :name %>
+<%= f.label :name %> : 
 <%= @product.name %><br />
-<%= f.label :description %>
+<%= f.label :description %> : 
 <%= @product.description %><br />
-<%= f.label :price %>
+<%= f.label :price %> : 
 <%= @product.price %><br />
-<%= f.label :weight %>
+<%= f.label :weight %> : 
 <%= @product.weight %><br />
-<%= f.label :category %>
-<%= @product.categories_id %><br />
+<%= f.label :category %> : 
+<% if @category_name != nil %>
+  <%= @category_name.name %><br />
 <% end %>
-
-<%= link_to "edit", edit_product_path %>
+<%= f.label :seller %> : 
+<% if @user_name != nil %>
+  <%= @user_name.name %><br />
+<% end %>
+<%= f.label :contact %> : 
+<%= @user_name.email %><br />
+<% if current_user.nil? %>
+  <% else %>
+    <% if @product.user_id == current_user.id %>
+        <%= link_to "edit", edit_product_path %>
+      <% end %>
+  <% end %>
+<% end %>

@@ -3,36 +3,33 @@
 <% flash[:error] %>
 <table>
   <tr>
-    <th>Title id</th>
     <th>Title</th>
     <th>Content</th>
-    <th>User id</th>
+    <th>Created By</th>
   </tr>
 <% if current_user.nil? %>
   <% @article.each do |f| %>
   <tr>
-    <td><%= f.id%></td>
     <td><%= f.title %></td>
     <td><%= truncate(strip_tags(f.body), length: 20) %></td>
-    <td><%= f.user_id %></td>
-    <td><%= link_to "Edit", {:action => "edit", :id => f.id} %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, :confirm => "Are you sure you want to delete  this article?" %></td>
+    <% name_user = User.find_by_id(f.user_id) %>
+    <td><%= name_user.name %></td>
     <td><%= link_to "show", {:action => "show", :id => f.id} %></td>
   </tr>
       <% end %>
 <% else %>
    <% @article.each do |f| %>
   <tr>
-    <td><%= f.id%></td>
     <td><%= f.title %></td>
     <td><%= truncate(strip_tags(f.body), length: 20) %></td>
-    <td><%= f.user_id %></td>
-    <% if current_user.id == f.user_id %>
+    <% name_user = User.find_by_id(f.user_id) %>
+    <td><%= name_user.name %></td>
+    <% if current_user.id == f.user_id || current_user.is_admin? %>
     <td><%= link_to "Edit", {:action => "edit", :id => f.id} %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, :confirm => "Are you sure you want to delete  this article?" %></td>
+    <td><%= link_to "Delete", {:action => "destroy", :id => f.id}, :confirm => "Are you sure you want to delete  this article?", :method => "delete" %></td>
     <% else %>
     <td><%= link_to "Edit", {:action => "edit", :id => f.id}, { :hidden => true } %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, { :hidden => true }, :confirm => "Are you sure you want to delete  this article?" %></td>
+    <td><%= link_to "Delete", {:action => "destroy", :id => f.id}, { :hidden => true }, :confirm => "Are you sure you want to delete  this article?", :method => "delete"%></td>
     <% end %>
     <td><%= link_to "Show", {:action => "show", :id => f.id}%></td>
   </tr>
@@ -41,5 +38,5 @@
 <% end %>
 </table>
 <br />
-<%= link_to "new articles", new_article_path %>
+
 

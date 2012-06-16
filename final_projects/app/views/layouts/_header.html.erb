@@ -7,8 +7,12 @@
           <li><%= link_to "Home", root_url %></li>
           <li><%= link_to "Products", products_path %></li>
           <li><%= link_to "Article", articles_path %></li>
+          <% if current_user.is_admin? %>
+          <li><%= link_to "Category", admin_categories_path %></li>
+          <% else %>
           <li><%= link_to "Category", categories_path %></li>
-          <li><%= link_to "Your Profile", users_path %></li>
+          <% end %>
+          <li><%= link_to "Your Profile", user_path(current_user.id) %></li>
               <% else %>
           <li><%= link_to "Sign Up", new_user_path %>
           <li><%= link_to "Products", products_path %></li>

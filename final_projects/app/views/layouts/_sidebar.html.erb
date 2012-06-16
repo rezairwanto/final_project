@@ -8,7 +8,22 @@
     <li><%= link_to "sell a product", new_product_path%> </li>
     <li><%= link_to "share an article", new_article_path%> </li>
     <li><%= link_to "log out", log_out_path %></li>
+    <li><h3> list Category</h3></li>
+   <% @category = Category.all %>
+   <% @category.each do |f| %>
+   <% if f.parent_id == nil %>
+      <li><%= f.name %></li>
+      <% @child = Category.find_all_by_parent_id(f.id) %>
+      <ol>
+        <% @child.each do |s| %>
+        <li><%= s.name %></li>
+        <% end %>
+      </ol>
+   <% else %>   
+   <% end %> 
+   <% end %>  
   </ul>
+  
   <% end %>
   </section>
 

@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-  has_many :article, :dependent => :destroy
-                     #:foreign_key => "user_id"
-  has_many :comment, :dependent => :destroy
-                     #:foreign_key => "user_id"
-  has_many :product, :dependent => :destroy
-                     #:foreign_key => "user_id"
+  has_many :article, :dependent => :destroy,
+                     :foreign_key => "user_id"
+  has_many :comment, :dependent => :destroy,
+                     :foreign_key => "user_id"
+  has_many :product, :dependent => :destroy,
+                     :foreign_key => "user_id"
 
   attr_accessor :password
   before_save :encrypt_password

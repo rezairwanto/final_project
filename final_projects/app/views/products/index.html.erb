@@ -1,7 +1,4 @@
 <h1>Listing Product</h1>
-<%= flash[:notice] %>
-<%= link_to "new product", new_product_path %><br/>
-
 <table>
   <tr>
     <th>Name</th>
@@ -12,8 +9,6 @@
   <tr>
     <td><%= f.name%></td>
     <td><%= f.price %></td>
-    <td><%= link_to "Edit", {:action => "edit", :id => f.id} %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, :confirm => "Are you sure you want to delete  this article?" %></td>
     <td><%= link_to "see more", {:action => "show", :id => f.id} %></td>
  </tr>
   <% end %>
@@ -22,13 +17,13 @@
   <tr>
     <td><%= f.name%></td>
     <td><%= f.price %></td>
-    <% if current_user.id == f.user_id %>
+    <% if current_user.id == f.user_id || current_user.is_admin? %>
     <td><%= link_to "Edit", {:action => "edit", :id => f.id} %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, :confirm => "Are you sure you want to delete  this article?" %></td>
+    <td><%= link_to "Destroy", {:action => "destroy", :id => f.id}, :confirm => "Are you sure you want to delete  this article?", :method => "delete" %></td>
     <td><%= link_to "see more", {:action => "show", :id => f.id} %></td>
     <% else %>
      <td><%= link_to "Edit", {:action => "edit", :id => f.id}, { :hidden => true } %></td>
-    <td><%= link_to "Delete", {:action => "delete", :id => f.id}, { :hidden => true }, :confirm => "Are you sure you want to delete  this article?" %></td>
+    <td><%= link_to "Destroy", {:action => "destroy", :id => f.id}, { :hidden => true }, :confirm => "Are you sure you want to delete  this article?", :method => "delete" %></td>
      <td><%= link_to "see more", {:action => "show", :id => f.id} %></td>
     <% end %>
   </tr>

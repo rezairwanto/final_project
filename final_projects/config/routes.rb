@@ -1,6 +1,6 @@
 FinalProjects::Application.routes.draw do
 
-   resources :users
+  resources :users
   resources :articles
   resources :products
   resources :comments
